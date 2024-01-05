@@ -64,7 +64,7 @@ export default function Home() {
             <h1>Madrid desde las alturas en la mejor terraza</h1>
             <p>Vale por una visita al 360º Rooftop Bar del Hotel Riu Madrid Plaza España.</p>
             <p>La visita incluye la subida a la terraza y disfrutar de las impactantes vistas con una consumición.</p>
-            <button>Reiniciar</button>
+            <button onClick={() => { setRight(false); setStep(0)}}>Reiniciar</button>
           </div>
         </main>
       </>
@@ -89,7 +89,7 @@ export default function Home() {
         <div className="step">
           <h1>¡Han venido los Reyes!</h1>
           <p>A continuación, cada uno de SS.MM. os vamos a hacer 3 preguntas.</p>
-          <p>Si las acertáis todas, ¡recibiréis vuestro regalo!; si no, carbón...</p>
+          <p>Si las acertáis todas, ¡recibiréis vuestro regalo! De lo contrario: carbón...</p>
           <p>¿Estáis preparados?</p>
           <button className="start" onClick={() => setStep(step + 1)}>Comenzar</button>
         </div>

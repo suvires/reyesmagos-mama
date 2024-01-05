@@ -14,20 +14,18 @@ html,
 body {
   overflow: hidden;
   height: 100%;
-  max-width: 670px;
-  margin: 0 auto;
 }
 
 body {
   background-image: url("/images/bg.png");
   background-repeat: no-repeat;
-  background-size: 670 150px;
+  background-size: contain;
   background-position: top center;
   padding: 0 1.5rem;
 }
 
 main {
-  margin-top: 185px;
+  margin-top: calc(100vw / 1.5);
 
   .step {
     display: flex;
@@ -57,9 +55,9 @@ main {
   li {
     margin-top: 1rem;
     margin-bottom: 2rem;
-    border: 1px solid #014c69;
+    background: #014c69;
     border-radius: 5px;
-    color: #014c69;
+    color: #FFF;
     font-size: .8rem;
     font-weight: 700;
     padding: .5rem;
