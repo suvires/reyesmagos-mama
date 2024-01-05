@@ -1,95 +1,128 @@
+"use client"
+import { useEffect, useState } from "react";
 import Image from 'next/image'
-import styles from './page.module.css'
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+  const { width, height } = useWindowSize()
+  const [step, setStep] = useState(0)
+  const [error, setError] = useState(false)
+  const [right, setRight] = useState(false)
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [fadeConfetti, setFadeConfetti] = useState(false);
+
+  const startConfetti = () => {
+    setShowConfetti(true);
+    setFadeConfetti(false);
+
+    const fadeOutTimer = setTimeout(() => {
+      setFadeConfetti(true);
+    }, 4500); // Comienza a desvanecerse después de 4.5 segundos
+
+    const hideTimer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000); // Desaparece completamente después de 5 segundos
+
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(hideTimer);
+    };
+  };
+
+  useEffect(() => {
+    if (step === 3 && right) {
+      startConfetti();
+    }
+  }, [step, right]);
+
+  if(error) {
+    return (
+      <main>
+        <div className="step">
+          <h1>¡Oh!</h1>
+          <p>Haremos como que no hemos visto nada... ¡Podéis volver a intentarlo!</p>
+          <button className="retry" onClick={() => setError(false)}>Reintentar</button>
         </div>
-      </div>
+      </main>
+    )
+  }
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+  if(right && step === 3) {
+    return (
+      <>
+        {showConfetti &&
+          <div style={{ opacity: fadeConfetti ? 0 : 1, transition: 'opacity 0.5s' }}>
+            <Confetti
+              width={width}
+              height={height}
+            />
+          </div>
+        }
+        <main>
+          <div className="step">
+            <h1>Madrid desde las alturas en la mejor terraza</h1>
+            <p>Vale por una visita al 360º Rooftop Bar del Hotel Riu Madrid Plaza España.</p>
+            <p>La visita incluye la subida a la terraza y disfrutar de las impactantes vistas con una consumición.</p>
+          </div>
+        </main>
+      </>
+    )
+  }
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  if(right) {
+    return (
+      <main>
+        <div className="step">
+          <h1>¡Genial!</h1>
+          <p>Estáis un pasito más cerca de recibir vuestro regalo.</p>
+          <button className="retry" onClick={() => { setRight(false); setStep(step+1)}}>Continuar</button>
+        </div>
+      </main>
+    )
+  }
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+  return (
+    <main>
+      {step === 0 && (
+        <div className="step">
+          <h1>¡Han venido los Reyes!</h1>
+          <p>A continuación, cada uno de SS.MM. os vamos a hacer 3 preguntas.</p>
+          <p>Si las acertáis todas, ¡recibiréis vuestro regalo!; si no, carbón...</p>
+          <p>¿Estáis preparados?</p>
+          <button className="start" onClick={() => setStep(step + 1)}>Comenzar</button>
+        </div>
+      )}
+      {step === 1 && (
+        <div className="step">
+          <h1>Ramillete de jazmines en forma de bola</h1>
+          <ul>
+            <li onClick={() => setError(true)}>Espeto</li>
+            <li onClick={() => setRight(true)}>Biznaga</li>
+            <li onClick={() => setError(true)}>Cenachero</li>
+          </ul>
+        </div>
+      )}
+      {step === 2 && (
+        <div className="step">
+          <h1>Mítico delantero malagueño del Real Madrid</h1>
+          <ul>
+            <li onClick={() => setError(true)}>Jaimito</li>
+            <li onClick={() => setError(true)}>Jorgito</li>
+            <li onClick={() => setRight(true)}>Juanito</li>
+          </ul>
+        </div>
+      )}
+      {step === 3 && (
+        <div className="step">
+          <h1>Típica sopa malagueña hecha con mayonesa</h1>
+          <ul>
+            <li onClick={() => setError(true)}>Pipirrana</li>
+            <li onClick={() => setRight(true) }>Gazpachuelo</li>
+            <li onClick={() => setError(true)}>Porra</li>
+          </ul>
+        </div>
+      )}
     </main>
   )
 }
