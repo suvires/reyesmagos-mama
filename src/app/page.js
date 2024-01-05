@@ -64,6 +64,7 @@ export default function Home() {
             <h1>Madrid desde las alturas en la mejor terraza</h1>
             <p>Vale por una visita al 360º Rooftop Bar del Hotel Riu Madrid Plaza España.</p>
             <p>La visita incluye la subida a la terraza y disfrutar de las impactantes vistas con una consumición.</p>
+            <button>Reiniciar</button>
           </div>
         </main>
       </>
