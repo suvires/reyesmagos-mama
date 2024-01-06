@@ -112,6 +112,7 @@ export default function Home() {
             <li onClick={() => setError(true)}>Barroco</li>
           </ul>
         </div>
+
       )}
       {step === 3 && (
         <div className="step">
