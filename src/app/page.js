@@ -119,7 +119,7 @@ export default function Home() {
           <ul>
             <li onClick={() => setError(true)}>Revueltó</li>
             <li onClick={() => setRight(true) }>Variat</li>
-            <li onClick={() => setError(true)}>Meclat</li>
+            <li onClick={() => setError(true)}>Mezclat</li>
           </ul>
         </div>
       )}
